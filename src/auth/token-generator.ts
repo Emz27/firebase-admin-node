@@ -29,7 +29,7 @@ const ONE_HOUR_IN_SECONDS = 60 * 60;
 
 // List of blacklisted claims which cannot be provided when creating a custom token
 export const BLACKLISTED_CLAIMS = [
-  'acr', 'amr', 'at_hash', 'aud', 'auth_time', 'azp', 'cnf', 'c_hash', 'exp', 'iat', 'iss', 'jti',
+  'acr', 'amr', 'at_hash', 'aud', 'auth_time', 'azp', 'cnf', 'c_hash', 'iat', 'iss', 'jti',
   'nbf', 'nonce',
 ];
 
@@ -120,7 +120,7 @@ export class FirebaseTokenGenerator {
    * @returns A Promise fulfilled with a Firebase Auth Custom token signed with a
    *     service account key and containing the provided payload.
    */
-  public createCustomToken(uid: string, developerClaims?: {[key: string]: any}): Promise<string> {
+  public createCustomToken(uid: string, developerClaims?: { [key: string]: any }): Promise<string> {
     let errorMessage: string | undefined;
     if (!validator.isNonEmptyString(uid)) {
       errorMessage = '`uid` argument must be a non-empty string uid.';
@@ -134,7 +134,7 @@ export class FirebaseTokenGenerator {
       throw new FirebaseAuthError(AuthClientErrorCode.INVALID_ARGUMENT, errorMessage);
     }
 
-    const claims: {[key: string]: any} = {};
+    const claims: { [key: string]: any } = {};
     if (typeof developerClaims !== 'undefined') {
       for (const key in developerClaims) {
         /* istanbul ignore else */
@@ -233,11 +233,11 @@ export function handleCryptoSignerError(err: Error): Error {
 
 function mapToAuthClientErrorCode(code: string): ErrorInfo {
   switch (code) {
-  case CryptoSignerErrorCode.INVALID_CREDENTIAL:
-    return AuthClientErrorCode.INVALID_CREDENTIAL;
-  case CryptoSignerErrorCode.INVALID_ARGUMENT:
-    return AuthClientErrorCode.INVALID_ARGUMENT;
-  default:
-    return AuthClientErrorCode.INTERNAL_ERROR;
+    case CryptoSignerErrorCode.INVALID_CREDENTIAL:
+      return AuthClientErrorCode.INVALID_CREDENTIAL;
+    case CryptoSignerErrorCode.INVALID_ARGUMENT:
+      return AuthClientErrorCode.INVALID_ARGUMENT;
+    default:
+      return AuthClientErrorCode.INTERNAL_ERROR;
   }
 }
